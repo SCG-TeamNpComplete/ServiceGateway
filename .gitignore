@@ -1,0 +1,7 @@
+# Libraries,deployables files and Packages #
+*.jar
+*.war
+*.ear
+
+#class files#
+*.class
