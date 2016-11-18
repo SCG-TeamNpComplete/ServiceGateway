@@ -1,0 +1,5 @@
+com\scientificgateway\delegator\Delegator.class
+com\scientificgateway\serviceLayer\stormClusteringService.class
+com\scientificgateway\serviceLayer\DataIngesterService.class
+Exception\NoZooKeeperServerUpException.class
+com\scientificgateway\serviceLayer\stormDetectionService.class
