@@ -15,7 +15,7 @@ do
 		sudo docker ps -a | grep "servicegateway$current_instance" | awk '{print $1}' | xargs --no-run-if-empty sudo docker rm
 	fi
 	#echo "$port:$port"
-	sudo docker run -d -p "$port:$port" --name "servicegateway$current_instance" $(sudo docker images | grep kedargn/servicegateway | awk '{print $3}')
+	sudo docker run -d -p "$port:8080" --name "servicegateway$current_instance" $(sudo docker images | grep kedargn/servicegateway | awk '{print $3}')
 	echo "servicegateway$current_instance instance"
 	current_instance=$((current_instance+1))
 	port=$((port+1))
