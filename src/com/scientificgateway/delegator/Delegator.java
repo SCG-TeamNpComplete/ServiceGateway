@@ -5,14 +5,12 @@ import java.net.InetAddress;
 import java.net.URI;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.RetryNTimes;
@@ -24,20 +22,15 @@ import org.apache.curator.x.discovery.UriSpec;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.glassfish.jersey.client.ClientConfig;
-
 import com.scientificgateway.serviceLayer.DataIngesterService;
 import com.scientificgateway.serviceLayer.stormClusteringService;
 import com.scientificgateway.serviceLayer.stormDetectionService;
-
 import Exception.NoZooKeeperServerUpException;
-
-
 
 @Path("/servicegateway")
 public class Delegator {
 
 	private static String availableIpAddress = null;
-
 	public Delegator() {
 
 		List<String> ipaddresses = new LinkedList<>();
@@ -283,7 +276,60 @@ public class Delegator {
 	@Path("/forecast")
 	@Produces("text/plain")
 	public String forecastManager() {
+		CuratorFramework curatorFramework = CuratorFrameworkFactory.newClient(availableIpAddress+":2181", new RetryNTimes(5, 1000));
+		curatorFramework.start();
 
+		ServiceDiscovery<Void> serviceDiscovery = ServiceDiscoveryBuilder.builder(Void.class)
+				.basePath("load-balancing-example").client(curatorFramework).build();
+		try {
+			serviceDiscovery.start();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		ServiceProvider<Void> serviceProvider = serviceDiscovery.serviceProviderBuilder().serviceName("forecast")
+				.build();
+		try {
+			serviceProvider.start();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// ServiceProvider serviceProvider;
+		ServiceInstance instance;
+
+		try {
+			List<ServiceInstance<Void>> instances = (List<ServiceInstance<Void>>) serviceProvider.getAllInstances();
+			if (instances.size() == 0) {
+				return null;
+			}
+
+			int thisIndex = forecastService.getIndex();
+			forecastService.setIndex(thisIndex + 1);
+			System.out.println("thisIndex" + thisIndex);
+			System.out.println(instances.get(thisIndex % instances.size()));
+
+			String address = instances.get(thisIndex % instances.size()).getId();
+			UriSpec address1 = instances.get(thisIndex % instances.size()).getUriSpec();
+			String url = address1.build();
+			System.out.println("URL from forecast manager, instance picked is");
+			System.out.println(url);
+
+			ClientConfig clientConfig = new ClientConfig();
+			Client client = ClientBuilder.newClient(clientConfig);
+			
+			// send request to storm clustering service
+			String response = client.target(url).request().get(String.class);
+			System.out.println("Response from forecast service");
+			System.out.println(response);
+
+			return address;
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "inside forecastManager";
 	}
 
@@ -291,6 +337,60 @@ public class Delegator {
 	@Path("/forecastdetector")
 	@Produces("text/plain")
 	public String forecastDetectorManager() {
+		CuratorFramework curatorFramework = CuratorFrameworkFactory.newClient(availableIpAddress+":2181", new RetryNTimes(5, 1000));
+		curatorFramework.start();
+
+		ServiceDiscovery<Void> serviceDiscovery = ServiceDiscoveryBuilder.builder(Void.class)
+				.basePath("load-balancing-example").client(curatorFramework).build();
+		try {
+			serviceDiscovery.start();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		ServiceProvider<Void> serviceProvider = serviceDiscovery.serviceProviderBuilder().serviceName("forecastDetector")
+				.build();
+		try {
+			serviceProvider.start();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// ServiceProvider serviceProvider;
+		ServiceInstance instance;
+
+		try {
+			List<ServiceInstance<Void>> instances = (List<ServiceInstance<Void>>) serviceProvider.getAllInstances();
+			if (instances.size() == 0) {
+				return null;
+			}
+
+			int thisIndex = forecastDetectorService.getIndex();
+			forecastDetectorService.setIndex(thisIndex + 1);
+			System.out.println("thisIndex" + thisIndex);
+			System.out.println(instances.get(thisIndex % instances.size()));
+
+			String address = instances.get(thisIndex % instances.size()).getId();
+			UriSpec address1 = instances.get(thisIndex % instances.size()).getUriSpec();
+			String url = address1.build();
+			System.out.println("URL from forecast detector manager, instance picked is");
+			System.out.println(url);
+
+			ClientConfig clientConfig = new ClientConfig();
+			Client client = ClientBuilder.newClient(clientConfig);
+			
+			// send request to storm clustering service
+			String response = client.target(url).request().get(String.class);
+			System.out.println("Response from forecast detector service");
+			System.out.println(response);
+
+			return address;
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return "inside forecastDetectorManager";
 	}
