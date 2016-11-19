@@ -14,7 +14,7 @@ services:
 
 install:
   - mvn -e clean install
-  - docker build -t kedargn/servicegateway ../.
+  - docker build -t kedargn/servicegateway .
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - docker push kedargn/servicegateway
 
