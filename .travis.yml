@@ -13,15 +13,12 @@ services:
 
 
 install:
-  - cd "ServiceGateway" && mvn -e clean install
+  - mvn -e clean install
   - docker build -t kedargn/servicegateway ../.
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - docker push kedargn/servicegateway
 
 script: mvn clean install -DskipTests=true
-
-after_success:
-  - cd ..
 
 before_deploy:
   - zip -r ServiceGateway.zip scripts appspec.yml || true
