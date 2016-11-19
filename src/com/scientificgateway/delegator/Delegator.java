@@ -23,6 +23,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.glassfish.jersey.client.ClientConfig;
 import com.scientificgateway.serviceLayer.DataIngesterService;
+import com.scientificgateway.serviceLayer.forecastDetectorService;
+import com.scientificgateway.serviceLayer.forecastService;
 import com.scientificgateway.serviceLayer.stormClusteringService;
 import com.scientificgateway.serviceLayer.stormDetectionService;
 import Exception.NoZooKeeperServerUpException;
