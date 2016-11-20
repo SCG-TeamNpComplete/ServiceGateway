@@ -145,6 +145,7 @@ public class Delegator {
 	@Path("/stormdetector")
 	@Produces("text/plain")
 	public String stormDetectorManager() {
+		System.out.println("in delegate manager-stromdetector");
 
 		CuratorFramework curatorFramework = CuratorFrameworkFactory.newClient(availableIpAddress+":2181",
 				new RetryNTimes(5, 1000));
@@ -174,6 +175,7 @@ public class Delegator {
 		try {
 			List<ServiceInstance<Void>> instances = (List<ServiceInstance<Void>>) serviceProvider.getAllInstances();
 			if (instances.size() == 0) {
+				System.out.println("no instances found for stormDetector");
 				return null;
 			}
 
@@ -213,6 +215,7 @@ public class Delegator {
 	@Path("/stormcluster")
 	@Produces("text/plain")
 	public String stormClusterManager() {
+		System.out.println("inside stormcluster manager");
 
 		CuratorFramework curatorFramework = CuratorFrameworkFactory.newClient(availableIpAddress+":2181",
 				new RetryNTimes(5, 1000));
@@ -278,6 +281,7 @@ public class Delegator {
 	@Path("/forecast")
 	@Produces("text/plain")
 	public String forecastManager() {
+		System.out.println("forecast manager");
 		CuratorFramework curatorFramework = CuratorFrameworkFactory.newClient(availableIpAddress+":2181", new RetryNTimes(5, 1000));
 		curatorFramework.start();
 
@@ -339,6 +343,7 @@ public class Delegator {
 	@Path("/forecastdetector")
 	@Produces("text/plain")
 	public String forecastDetectorManager() {
+		System.out.println("forecastdetector manager");
 		CuratorFramework curatorFramework = CuratorFrameworkFactory.newClient(availableIpAddress+":2181", new RetryNTimes(5, 1000));
 		curatorFramework.start();
 
