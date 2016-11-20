@@ -1,0 +1,51 @@
+lannguage: java
+branches:
+  only:
+    - master
+
+
+jdk:
+  - oraclejdk8
+sudo: required
+
+services:
+  - docker
+
+
+install:
+  - mvn -e clean install
+  - docker build -t kedargn/servicegateway .
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker push kedargn/servicegateway
+
+script: mvn clean install -DskipTests=true
+
+before_deploy:
+  - zip -r ServiceGateway.zip scripts appspec.yml || true
+  - mkdir -p "dpl_java_upload"
+  - mv ServiceGateway.zip dpl_java_upload/ServiceGateway.zip || true
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: sga-teamnpcomplete
+    local_dir: dpl_java_upload
+    region: us-west-2
+    skip_cleanup: true
+    acl: public_read
+    detect_encoding: true
+    on:
+      branch: master
+
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY # declared in Travis repo settings
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: sga-teamnpcomplete
+    key: ServiceGateway.zip
+    bundle_type: zip
+    application: TeamNPComplete
+    deployment_group: TeamNPComplete
+    region: us-west-2
+    on:
+      branch: master
