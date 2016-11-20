@@ -11,6 +11,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.RetryNTimes;
@@ -22,6 +25,8 @@ import org.apache.curator.x.discovery.UriSpec;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.glassfish.jersey.client.ClientConfig;
+
+
 import com.scientificgateway.serviceLayer.DataIngesterService;
 import com.scientificgateway.serviceLayer.forecastDetectorService;
 import com.scientificgateway.serviceLayer.forecastService;
@@ -321,14 +326,32 @@ public class Delegator {
 			String url = address1.build();
 			System.out.println("URL from forecast manager, instance picked is");
 			System.out.println(url);
+			
+			MessageToForecast msg=new MessageToForecast();
+			msg.setReqId(10);
+	    	msg.setUserId("soumya");
+			
+			
+			
+			ClientConfig config1 = new ClientConfig();
+			//System.out.println("ClientConfig config1 ");
+			Client client1 = ClientBuilder.newClient(config1);
+			//System.out.println("Client client1 ");
+			WebTarget target1 = client1.target(url);
+			System.out.println("WebTarget");
+			
+			
+			//Response response1 = target1.request().post(Entity.entity("hii", "application/xml"),Response.class);
+			String responsefrom;
+			responsefrom=target1.request().post(Entity.entity(msg, "application/json"),String.class);
 
-			ClientConfig clientConfig = new ClientConfig();
+			/*ClientConfig clientConfig = new ClientConfig();
 			Client client = ClientBuilder.newClient(clientConfig);
 			
 			// send request to storm clustering service
 			String response = client.target(url).request().get(String.class);
-			System.out.println("Response from forecast service");
-			System.out.println(response);
+			System.out.println("Response from forecast service");*/
+			System.out.println(responsefrom);
 
 			return address;
 
@@ -381,16 +404,39 @@ public class Delegator {
 			String address = instances.get(thisIndex % instances.size()).getId();
 			UriSpec address1 = instances.get(thisIndex % instances.size()).getUriSpec();
 			String url = address1.build();
-			System.out.println("URL from forecast detector manager, instance picked is");
+			
+			
+			MessageToForecast msg=new MessageToForecast();
+			msg.setReqId(10);
+	    	msg.setUserId("soumya");
+			
+			
+			
+			ClientConfig config1 = new ClientConfig();
+			//System.out.println("ClientConfig config1 ");
+			Client client1 = ClientBuilder.newClient(config1);
+			//System.out.println("Client client1 ");
+			WebTarget target1 = client1.target(url);
+			System.out.println("WebTarget");
+			
+			
+			//Response response1 = target1.request().post(Entity.entity("hii", "application/xml"),Response.class);
+			String responsefrom;
+			responsefrom=target1.request().post(Entity.entity(msg, "application/json"),String.class);
+			
+			
+			
+			
+			/*System.out.println("URL from forecast detector manager, instance picked is");
 			System.out.println(url);
 
 			ClientConfig clientConfig = new ClientConfig();
 			Client client = ClientBuilder.newClient(clientConfig);
 			
 			// send request to storm clustering service
-			String response = client.target(url).request().get(String.class);
+			String response = client.target(url).request().get(String.class);*/
 			System.out.println("Response from forecast detector service");
-			System.out.println(response);
+			System.out.println(responsefrom);
 
 			return address;
 
