@@ -83,7 +83,7 @@ public class Delegator {
 				new RetryNTimes(5, 1000));
 		curatorFramework.start();
 
-		System.out.println("in delegate manager-dataingester");
+		//System.out.println("in delegate manager-dataingester");
 
 		ServiceDiscovery<Void> serviceDiscovery = ServiceDiscoveryBuilder.builder(Void.class)
 				.basePath("load-balancing-example-dataIngester").client(curatorFramework).build();
@@ -143,7 +143,7 @@ public class Delegator {
 			e.printStackTrace();
 		}
 
-		return "inside dataIngesterManager";
+		return "nothing bro -> dataIngesterManager";
 	}
 
 	@GET
@@ -213,7 +213,7 @@ public class Delegator {
 			e.printStackTrace();
 		}
 
-		return "inside stormDetectorManager";
+		return "nothing bro - stormDetectorManager";
 	}
 
 	@GET
@@ -249,7 +249,7 @@ public class Delegator {
 		try {
 			List<ServiceInstance<Void>> instances = (List<ServiceInstance<Void>>) serviceProvider.getAllInstances();
 			if (instances.size() == 0) {
-				return null;
+				return "no instances found";
 			}
 
 			int thisIndex = stormClusteringService.getIndex();
@@ -279,7 +279,7 @@ public class Delegator {
 			e.printStackTrace();
 		}
 
-		return "inside stormClusterManager";
+		return "nothing bro - stormcluster";
 	}
 
 	@GET
@@ -313,7 +313,7 @@ public class Delegator {
 		try {
 			List<ServiceInstance<Void>> instances = (List<ServiceInstance<Void>>) serviceProvider.getAllInstances();
 			if (instances.size() == 0) {
-				return null;
+				return "no instances found";
 			}
 
 			int thisIndex = forecastService.getIndex();
@@ -329,7 +329,7 @@ public class Delegator {
 			
 			MessageToForecast msg=new MessageToForecast();
 			msg.setReqId(10);
-	    	msg.setUserId("soumya");
+	    	//msg.setUserId("soumya");
 			
 			
 			
@@ -359,7 +359,7 @@ public class Delegator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "inside forecastManager";
+		return "nothing bro - forecastManager";
 	}
 
 	@GET
@@ -393,7 +393,7 @@ public class Delegator {
 		try {
 			List<ServiceInstance<Void>> instances = (List<ServiceInstance<Void>>) serviceProvider.getAllInstances();
 			if (instances.size() == 0) {
-				return null;
+				return "no instances found";
 			}
 
 			int thisIndex = forecastDetectorService.getIndex();
@@ -445,7 +445,7 @@ public class Delegator {
 			e.printStackTrace();
 		}
 
-		return "inside forecastDetectorManager";
+		return "nothing bro - forecastDetectorManager";
 	}
 
 }
