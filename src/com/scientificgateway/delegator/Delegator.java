@@ -217,6 +217,10 @@ public class Delegator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		finally{
+			curatorFramework.close();	
+		}
 
 		return "nothing bro - stormDetectorManager";
 	}
@@ -282,6 +286,9 @@ public class Delegator {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		finally{
+			curatorFramework.close();	
 		}
 
 		return "nothing bro - stormcluster";
@@ -363,6 +370,9 @@ public class Delegator {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		finally{
+			curatorFramework.close();	
 		}
 		return "nothing bro - forecastManager";
 	}
@@ -448,6 +458,9 @@ public class Delegator {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		finally{
+			curatorFramework.close();	
 		}
 
 		return "nothing bro - forecastDetectorManager";
