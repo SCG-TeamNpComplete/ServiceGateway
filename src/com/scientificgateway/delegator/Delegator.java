@@ -154,8 +154,13 @@ public class Delegator {
 
 		CuratorFramework curatorFramework = CuratorFrameworkFactory.newClient(availableIpAddress+":2181",
 				new RetryNTimes(5, 1000));
+		try{
 		curatorFramework.start();
-
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		ServiceDiscovery<Void> serviceDiscovery = ServiceDiscoveryBuilder.builder(Void.class)
 				.basePath("load-balancing-example").client(curatorFramework).build();
 		try {
