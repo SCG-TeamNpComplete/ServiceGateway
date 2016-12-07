@@ -86,7 +86,7 @@ public class Delegator {
 		//System.out.println("in delegate manager-dataingester");
 
 		ServiceDiscovery<Void> serviceDiscovery = ServiceDiscoveryBuilder.builder(Void.class)
-				.basePath("load-balancing-example-dataIngester").client(curatorFramework).build();
+				.basePath("load-balancing-example").client(curatorFramework).build();
 		try {
 			serviceDiscovery.start();
 		} catch (Exception e) {
