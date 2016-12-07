@@ -238,7 +238,7 @@ public class Delegator {
 		ServiceProvider<Void> serviceProvider = serviceDiscovery.serviceProviderBuilder().serviceName("stormCluster")
 				.build();
 		try {
-			serviceProvider.start();
+			//serviceProvider.start();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
