@@ -184,6 +184,7 @@ public class Delegator {
 
 		try {
 			List<ServiceInstance<Void>> instances = (List<ServiceInstance<Void>>) serviceProvider.getAllInstances();
+			curatorFramework.close();	
 			if (instances.size() == 0) {
 				System.out.println("no instances found for stormDetector");
 				return null;
@@ -218,9 +219,9 @@ public class Delegator {
 			e.printStackTrace();
 		}
 		
-		finally{
-			curatorFramework.close();	
-		}
+		//finally{
+			//
+		//}
 
 		return "nothing bro - stormDetectorManager";
 	}
@@ -257,6 +258,7 @@ public class Delegator {
 
 		try {
 			List<ServiceInstance<Void>> instances = (List<ServiceInstance<Void>>) serviceProvider.getAllInstances();
+			curatorFramework.close();	
 			if (instances.size() == 0) {
 				return "no instances found";
 			}
@@ -287,9 +289,9 @@ public class Delegator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally{
-			curatorFramework.close();	
-		}
+		//finally{
+		//	curatorFramework.close();	
+		//}
 
 		return "nothing bro - stormcluster";
 	}
@@ -324,6 +326,7 @@ public class Delegator {
 
 		try {
 			List<ServiceInstance<Void>> instances = (List<ServiceInstance<Void>>) serviceProvider.getAllInstances();
+			curatorFramework.close();	
 			if (instances.size() == 0) {
 				return "no instances found";
 			}
@@ -371,9 +374,9 @@ public class Delegator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally{
-			curatorFramework.close();	
-		}
+		//finally{
+		//	curatorFramework.close();	
+		//}
 		return "nothing bro - forecastManager";
 	}
 
@@ -407,6 +410,7 @@ public class Delegator {
 
 		try {
 			List<ServiceInstance<Void>> instances = (List<ServiceInstance<Void>>) serviceProvider.getAllInstances();
+			curatorFramework.close();	
 			if (instances.size() == 0) {
 				return "no instances found";
 			}
@@ -459,9 +463,9 @@ public class Delegator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally{
-			curatorFramework.close();	
-		}
+		//finally{
+		//	curatorFramework.close();	
+		//}
 
 		return "nothing bro - forecastDetectorManager";
 	}
