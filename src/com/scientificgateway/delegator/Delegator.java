@@ -42,8 +42,8 @@ public class Delegator {
 
 		List<String> ipaddresses = new LinkedList<>();
 		ipaddresses.add("ec2-35-161-48-143.us-west-2.compute.amazonaws.com");
-		ipaddresses.add("ec2-35-160-137-157.us-west-2.compute.amazonaws.com");
-		ipaddresses.add("ec2-52-15-90-97.us-east-2.compute.amazonaws.com");
+		ipaddresses.add("ec2-35-165-150-185.us-west-2.compute.amazonaws.com");
+		ipaddresses.add("ec2-52-15-204-32.us-east-2.compute.amazonaws.com");
 
 		URI uri = null;
 		String response = null;
