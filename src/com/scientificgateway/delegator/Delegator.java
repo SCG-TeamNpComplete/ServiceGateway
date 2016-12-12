@@ -266,10 +266,10 @@ public class Delegator {
 			int thisIndex = stormClusteringService.getIndex();
 			stormClusteringService.setIndex(thisIndex + 1);
 			System.out.println("thisIndex" + thisIndex);
-			System.out.println(instances.get(thisIndex % instances.size()));
+			System.out.println(instances.get(0));
 
-			String address = instances.get(thisIndex % instances.size()).getId();
-			UriSpec address1 = instances.get(thisIndex % instances.size()).getUriSpec();
+			String address = instances.get(0).getId();
+			UriSpec address1 = instances.get(0).getUriSpec();
 			String url = address1.build();
 			System.out.println("URL from storm cluster manager, instance picked is");
 			System.out.println(url);
