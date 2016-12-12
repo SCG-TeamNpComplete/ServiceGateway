@@ -270,7 +270,8 @@ public class Delegator {
 
 			String address = instances.get(0).getId();
 			UriSpec address1 = instances.get(0).getUriSpec();
-			String url = address1.build();
+			//String url = address1.build();
+			String url = "http://35.161.48.143:8888/SG_MICROSERVICE_STROMCLUSTERING/gateway/StormClustering/get";
 			System.out.println("URL from storm cluster manager, instance picked is");
 			System.out.println(url);
 
